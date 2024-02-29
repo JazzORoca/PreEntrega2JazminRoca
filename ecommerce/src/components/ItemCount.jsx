@@ -1,9 +1,10 @@
 import { useState } from "react";
+
+import Swal from "sweetalert2";
 import "./ItemCount.css";
-
-const ItemCount = ({ inicial, stock }) => {
-  const [contador, setContador] = useState(inicial);
-
+const ItemCount = ({ inicial, stock,onAdd }) => {
+  const [contador, setContador] = useState(1);
+  
   const incrementar = () => {
     if (contador < stock) {
       setContador(contador + 1);
@@ -17,7 +18,16 @@ const ItemCount = ({ inicial, stock }) => {
   };
 
   const agregarCarrito = () => {
-    alert("AGREGASTE ESTA CANTIDAD DE PRODUCTOS: " + contador);
+    onAdd(contador);
+    Swal.fire({
+      icon: "success",
+      title: "Producto añadido al carrito",
+      text: `Se añadieron ${contador} producto(s) al carrito.`,
+    });
+    
+  onAdd(contador);
+  
+  
   };
 
   return (
@@ -27,9 +37,9 @@ const ItemCount = ({ inicial, stock }) => {
           className="btn btn-dark btn-sm"
           onClick={decrementar}
         >
-          -
+        -  
         </button>
-        <span className="quantity">{contador}</span>
+        <p className="quantity">{contador}</p>
         <button
           className="btn btn-dark btn-sm"
           onClick={incrementar}
@@ -37,14 +47,17 @@ const ItemCount = ({ inicial, stock }) => {
           +
         </button>
       </div>
-      <button
-        className="btn btn-primary btn-block mt-3 mb-3"
-        onClick={agregarCarrito}
-        disabled={stock === 0}
-        style={{color:'black', fontSize:'20px', fontFamily:'inherit', fontWeight:'bold',background:'blue'}}
-      >
-        Agregar al carrito
-      </button>
+     <button
+      className="btn btn-primary btn-block mt-3 mb-3"
+      onClick={agregarCarrito}
+      disabled={stock === 0}
+      style={{color:'black', fontSize:'20px', fontFamily:'inherit', fontWeight:'bold',background:'blue'}}
+    >
+      Agregar al carrito
+    </button>
+    
+   
+      
     </div>
   );
 };
